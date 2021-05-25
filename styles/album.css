@@ -1,0 +1,16 @@
+.song {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.song:hover {
+    background-color: rgb(43, 43, 43);
+}
+
+.song_text {
+    color: rgb(189, 189, 189);
+    font-weight: 300;
+}

@@ -8,8 +8,22 @@
     "start": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "axios": "^0.21.1",
+    "jsonwebtoken": "^8.5.1",
     "next": "10.2.0",
+    "nodenv": "^0.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-player": "^2.9.0",
+    "react-router-dom": "^5.2.0",
+    "react-spotify-web-playback": "^0.8.1",
+    "spotify-web-api-js": "^1.5.1",
+    "spotify-web-api-node": "^5.0.2",
+    "sweetalert": "^2.1.2",
+    "youtube-player": "^5.5.2",
+    "youtube-search": "^1.1.6"
   }
 }
