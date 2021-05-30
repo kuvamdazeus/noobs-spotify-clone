@@ -2,11 +2,11 @@ import '../styles/globals.css';
 import '../styles/dashboard.css';
 import '../styles/album.css';
 import { useEffect, useState } from 'react';
-import SpotifyWebApi from 'spotify-web-api-js';
 import Sidebar from '../components/Sidebar.jsx';
 import jwt from 'jsonwebtoken';
 import router from 'next/router';
-import YoutubePlayer from 'youtube-player';
+import SpotifyWebApi from 'spotify-web-api-js';
+import axios from 'axios';
 
 const spotifyApi = new SpotifyWebApi({
 	clientId: process.env.SPOTIFY_CLIENT_ID,

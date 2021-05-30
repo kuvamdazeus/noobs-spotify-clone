@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Avatar } from '@material-ui/core';
 import jwt from 'jsonwebtoken';
-import SongContainer from "../../components/SongContainer";
+import SongContainer from "../components/SongContainer";
+import axios from 'axios';
 import router from "next/router";
 
 export default function Album({ appContext }) {
@@ -15,7 +16,6 @@ export default function Album({ appContext }) {
 
     useEffect(() => {
         if (localStorage.getItem('spotify_clone_token')) {
-            let albumId = window.location.href.split('/album/')[1].trim('/');
             spotifyApi.setAccessToken(jwt.verify(localStorage.getItem('spotify_clone_token'), 'access_token_spotify2'));
 
             let hours = new Date().getHours();
@@ -28,24 +28,44 @@ export default function Album({ appContext }) {
                 setColors(morning);
             }
 
-            spotifyApi.getAlbum(albumId)
-            .then(data => {
-                setAlbum(data);
-                spotifyApi.getAlbumTracks(albumId)
-                .then(tracksData => setTracks(tracksData.items));
+            spotifyApi.getUserPlaylists()
+            .then(userPlaylists => {
+                let playlistTracks = [];
 
-            })
-            .catch(err => {
-                if (err.status === 404) {
-                    spotifyApi.getPlaylist(albumId)
-                    .then(data => {
-                        setAlbum(data);
+                userPlaylists.items.map(async (playlist) => {
+                    let playlistSongs = [];
+                    let totalSongs = playlist.tracks.total;
+                    let offset = 0;
 
-                        let pTracks = [];
-                        data.tracks.items.map(t => pTracks.push(t.track));
-                        setTracks(pTracks);
+                    while (totalSongs - offset > 100) {
+                        let tracks = await spotifyApi.getPlaylistTracks(playlist.id, { limit: 100, offset });
+                        
+                        tracks = tracks.items.map(track => track.track.id);
+                        let audioFeatures = await spotifyApi.getAudioFeaturesForTracks(tracks);
+
+                        playlistSongs = playlistSongs.concat(audioFeatures.audio_features);
+                        offset = offset + 100;
+                    }
+
+                    let newTracks = await spotifyApi.getPlaylistTracks(playlist.id, { limit: 100, offset });
+                    newTracks = newTracks.items.map(track => track.track.id);
+                    let newAudioFeatures = await spotifyApi.getAudioFeaturesForTracks(newTracks);
+
+                    playlistSongs = playlistSongs.concat(newAudioFeatures.audio_features);
+
+                    playlistTracks.push([playlist.id, playlistSongs]);
+
+                });
+
+                setTimeout(() => {
+                    axios.post(process.env.NEXT_PUBLIC_ML_SERVER + '/push-user-friendlies', playlistTracks)
+                    .then(async res => {
+                        let data = await spotifyApi.getTracks(res.data.recommendations);
+                        setTracks(data.tracks);
                     });
-                }
+                
+                }, 5000);
+                
             });
 
         } else {
@@ -94,17 +114,14 @@ export default function Album({ appContext }) {
                 }}
                 // className='dashboard_header'
             >
-                <img
-                    src={album.images ? album.images[0]?.url : null}
-                    alt='' 
+				<p
                     style={{
-                        objectFit: 'contain',
-                        width: '18vw',
-                        margin: 20,
-                        borderRadius: 10
+                        fontSize: '4.5vw',
+                        margin: 50,
                     }}
-                />
-				<p style={{fontSize: '3.5vw'}}><b>{album.name}</b></p>
+                >
+                        <b>Recommendations 💯</b>
+                </p>
 
 			</header><br /><br />
 

@@ -6,7 +6,6 @@ import router from 'next/router';
 import SpotifyAlert from '../components/SpotifyAlert';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import swal from 'sweetalert';
-import search from 'youtube-search';
 import SongContainer from '../components/SongContainer';
 
 export default function Dashboard({ appContext }) {
