@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import SongContainer from "../components/SongContainer";
 import axios from 'axios';
 import router from "next/router";
+import StyledContentLoader from 'styled-content-loader'
 
 export default function Album({ appContext }) {
     const { spotifyApi, user } = appContext;
@@ -13,6 +14,7 @@ export default function Album({ appContext }) {
 
     const [album, setAlbum] = useState('');
     const [tracks, setTracks] = useState('');
+    const [infoMessage, setInfoMessage] = useState('Searching songs suiting your listening needs, this may take a few seconds, please wait...');
 
     useEffect(() => {
         if (localStorage.getItem('spotify_clone_token')) {
@@ -60,8 +62,14 @@ export default function Album({ appContext }) {
                 setTimeout(() => {
                     axios.post(process.env.NEXT_PUBLIC_ML_SERVER + '/push-user-friendlies', playlistTracks)
                     .then(async res => {
-                        let data = await spotifyApi.getTracks(res.data.recommendations);
-                        setTracks(data.tracks);
+                        if (res.data.status) {
+                            let data = await spotifyApi.getTracks(res.data.recommendations);
+                            setInfoMessage('');
+                            setTracks(data.tracks);
+                        
+                        } else {
+                            setInfoMessage(res.data.message);
+                        }
                     });
                 
                 }, 5000);
@@ -126,6 +134,11 @@ export default function Album({ appContext }) {
 			</header><br /><br />
 
             {tracks && tracks.map(song => <SongContainer song={song} album={album} key={song.id} />)}
+            {infoMessage && 
+                <p style={{color: 'grey', fontSize: 16, marginLeft: 50}}>
+                    {infoMessage}
+                </p>
+            }
 
         </section>
     );
