@@ -19,7 +19,7 @@ export default function Sidebar({ appContext }) {
     }, []);
     
     const goToPlaylist = e => {
-        router.push('/album/' + e.target.id);
+        router.push('/album/' + e.target.id).then(() => window.location.reload());
     }
 
     const handleSearchClick = () => {

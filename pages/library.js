@@ -31,7 +31,7 @@ export default function Album({ appContext }) {
             }
 
             spotifyApi.getUserPlaylists()
-            .then(userPlaylists => {
+            .then(async userPlaylists => {
                 let playlistTracks = [];
 
                 userPlaylists.items.map(async (playlist) => {
@@ -52,12 +52,18 @@ export default function Album({ appContext }) {
                     let newTracks = await spotifyApi.getPlaylistTracks(playlist.id, { limit: 100, offset });
                     newTracks = newTracks.items.map(track => track.track.id);
                     let newAudioFeatures = await spotifyApi.getAudioFeaturesForTracks(newTracks);
-
+                    
                     playlistSongs = playlistSongs.concat(newAudioFeatures.audio_features);
-
                     playlistTracks.push([playlist.id, playlistSongs]);
 
                 });
+
+                let likedTracks = await spotifyApi.getMyTopTracks({ limit: 50 });
+                let trackIds = likedTracks.items.map(track => track.id);
+                let likedFeatures = await spotifyApi.getAudioFeaturesForTracks(trackIds);
+
+                playlistTracks.push(['liked_ones', likedFeatures.audio_features]);
+
 
                 setTimeout(() => {
                     axios.post(process.env.NEXT_PUBLIC_ML_SERVER + '/push-user-friendlies', playlistTracks)
@@ -70,7 +76,8 @@ export default function Album({ appContext }) {
                         } else {
                             setInfoMessage(res.data.message);
                         }
-                    });
+                    })
+                    .catch(() => setInfoMessage('Error occured while fetching data, you may consider to reload the page'));
                 
                 }, 5000);
                 

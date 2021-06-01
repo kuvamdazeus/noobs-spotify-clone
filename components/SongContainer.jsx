@@ -24,31 +24,28 @@ export default function SongContainer({ song, album }) {
 
     const handleSongPlay = () => {
         // search song by name first
-        console.log('searching');
-        const opts = {
-            key: 'AIzaSyCisOJ1rNLIPQ4-f5xzX5S7gG46LKbxT9M',
-            maxResults: 1,
-        };
+        if (playing) setPlaying('');
 
-        search(`${song.name} by ${song.artists[0].name}`, opts, (err, results) => {
-            console.log(results, song);
+        else {
+            const opts = {
+                key: 'AIzaSyCisOJ1rNLIPQ4-f5xzX5S7gG46LKbxT9M',
+                maxResults: 1,
+            };
 
-            if (err) {
-                console.log(JSON.parse(err.response));
-            
-            } else {
-                setPlaying(results[0].link);
+            search(`${song.name} by ${song.artists[0].name}`, opts, (err, results) => {
+                console.log(results, song);
 
-            }
-        });
+                if (err) {
+                    console.log(JSON.parse(err.response));
+                
+                } else {
+                    setPlaying(results[0].link);
+
+                }
+            });
+        
+        }
     }
-
-    if (playing)
-        return (
-            <section className='song' style={{display: 'flex', justifyContent: 'center'}}>
-                <ReactPlayer url={playing} controls playing />
-            </section>
-        );
     
     return (
         <>
@@ -67,6 +64,12 @@ export default function SongContainer({ song, album }) {
                 </div>
                 <p className='song_text'>{songTime}</p>
             </section>
+
+            {playing && 
+                <section style={{display: 'flex', justifyContent: 'center', marginBottom: 20}}>
+                    <ReactPlayer url={playing} controls playing />
+                </section>
+            }
         </>
     );
 }
