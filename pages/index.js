@@ -39,7 +39,7 @@ export default function Home({ appContext }) {
   */
 
   const handleLogin = () => {
-    axios.get('http://localhost:3000/api/auth')
+    axios.get('/api/auth')
     .then(res => router.push(res.data.url));
   }
 
