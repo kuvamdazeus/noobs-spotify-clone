@@ -30,7 +30,7 @@ export default function Album({ appContext }) {
                 setColors(morning);
             }
 
-            spotifyApi.getUserPlaylists()
+            spotifyApi.getUserPlaylists(user.id)
             .then(async userPlaylists => {
                 let playlistTracks = [];
 
