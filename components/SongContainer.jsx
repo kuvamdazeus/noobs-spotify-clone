@@ -36,7 +36,7 @@ export default function SongContainer({ song, album }) {
                 console.log(results, song);
 
                 if (err) {
-                    console.log(JSON.parse(err.response));
+                    console.log(err);
                 
                 } else {
                     setPlaying(results[0].link);
