@@ -58,11 +58,11 @@ export default function Album({ appContext }) {
 
                 });
 
-                let likedTracks = await spotifyApi.getMyTopTracks({ limit: 50 });
-                let trackIds = likedTracks.items.map(track => track.id);
-                let likedFeatures = await spotifyApi.getAudioFeaturesForTracks(trackIds);
+                // let likedTracks = await spotifyApi.getMyTopTracks({ limit: 50 });
+                // let trackIds = likedTracks.items.map(track => track.id);
+                // let likedFeatures = await spotifyApi.getAudioFeaturesForTracks(trackIds);
 
-                playlistTracks.push(['liked_ones', likedFeatures.audio_features]);
+                // playlistTracks.push(['liked_ones', likedFeatures.audio_features]);
 
 
                 setTimeout(() => {
