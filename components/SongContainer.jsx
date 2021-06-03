@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import search from 'youtube-search';
 import ReactPlayer from 'react-player';
 
-export default function SongContainer({ song, album }) {
+export default function SongContainer({ song, album, spotifyApi }) {
 
     const [songTime, setSongTime] = useState('');
     const [songAlbum, setSongAlbum] = useState('');
     const [playing, setPlaying] = useState('');
+
+    const [mouseOver, setMouseOver] = useState(false);
+    const [buttonText, setButtonText] = useState('Save');
+    const [isPlaylist, setIsPlaylist] = useState(album.type === 'playlist');
 
     useEffect(() => {
         let songMinutes = song.duration_ms / (1000 * 60);
@@ -46,10 +50,18 @@ export default function SongContainer({ song, album }) {
         
         }
     }
+
+    const handleAddToPlaylist = () => {
+        spotifyApi.addToMySavedTracks([song.id])
+            .then(() => {
+                setButtonText('Saved');
+            })
+            .catch(err => console.log(err.response));
+    }
     
     return (
         <>
-            <section className='song' onClick={handleSongPlay}>
+            <section onMouseOver={() => setMouseOver(true)} onMouseLeave={() => setMouseOver(false)} className='song'>
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <img 
                         src={(album && album.type !== 'playlist') ? (album.images && album.images[0].url) : (songAlbum.images && songAlbum.images[0].url)} 
@@ -60,9 +72,45 @@ export default function SongContainer({ song, album }) {
                             marginRight: 10
                         }}
                     />
-                    <p className='song_text'>{song.name}</p>
+
+                    <div>
+                        <p
+                            className='song_text'
+                            onMouseOver={e => e.target.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.target.style.textDecoration = 'none'}
+                            style={{cursor: 'pointer'}}
+                            onClick={handleSongPlay}
+                        >
+                            {song.name}
+                        </p>
+
+                        <p
+                            style={{
+                                color: 'grey',
+                                fontSize: 12
+                            }}
+                        >
+                            {song.artists.map(artist => artist.name).join(', ')}
+                        </p>
+                    </div>
                 </div>
-                <p className='song_text'>{songTime}</p>
+                {mouseOver && !isPlaylist ?
+                    <button
+                        style={{
+                            border: '1px solid white',
+                            borderRadius: 100,
+                            padding: 7,
+                            paddingInline: 10,
+                            backgroundColor: 'inherit',
+                            cursor: 'pointer',
+                        }}
+                        onClick={handleAddToPlaylist}
+                    >
+                        {buttonText}
+                    </button>
+                    :
+                    <p className='song_text'>{songTime}</p>
+                }
             </section>
 
             {playing && 

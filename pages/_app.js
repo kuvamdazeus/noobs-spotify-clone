@@ -6,7 +6,7 @@ import Sidebar from '../components/Sidebar.jsx';
 import jwt from 'jsonwebtoken';
 import router from 'next/router';
 import SpotifyWebApi from 'spotify-web-api-js';
-import axios from 'axios';
+import swal from 'sweetalert';
 
 const spotifyApi = new SpotifyWebApi({
 	clientId: process.env.SPOTIFY_CLIENT_ID,
@@ -21,6 +21,11 @@ function MyApp({ Component, pageProps }) {
   const [search, setSearch] = useState(false);
 
   useEffect(() => {
+    if(window.screen.width < 500 && window.location.pathname !== '/') {
+      swal({ icon: 'warning', title: 'Please use this website in landscape mode for best user experience :)' })
+      .then(() => window.location.reload());
+    }
+
     if(window.location.pathname !== '/') {
       setRenderSidebar(true);
     }

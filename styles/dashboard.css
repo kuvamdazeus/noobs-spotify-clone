@@ -5,6 +5,7 @@
     padding-top: 15px;
     border-right: 2px solid rgb(34, 34, 34);
     overflow-y: scroll;
+    max-height: 100vh;
 }
 
 .sidebar hr {

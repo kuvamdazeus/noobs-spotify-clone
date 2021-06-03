@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import Head from 'next/head';
 import { Avatar } from '@material-ui/core';
 import AlbumContainer from '../components/AlbumContainer';
 import jwt from 'jsonwebtoken';
@@ -105,6 +106,12 @@ export default function Dashboard({ appContext }) {
 	return (
 		<section className="dashboard">
 
+			<Head>
+                <title>Spotify - Dashboard</title>
+                <meta name="description" content="All of your top artists & albums at 1 place" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
 			<nav style={navStyles}>
 				{search ?
 					<form onSubmit={handleSearch}>
@@ -127,8 +134,13 @@ export default function Dashboard({ appContext }) {
 							swal({
 								icon: 'info',
 								title: 'Info', 
-								text: `"Spotify Web Player: This functionality is restricted to premium users only"\n😑............Fuck it ! we are using youtube's playback.`,
-								button: {text: 'Hell yeah !'}
+								text: `
+									Made with 🎧  by Kuvam Bhardwaj
+									Github: github.com/kuvamdazeus\n
+									Got any frontend suggestions ? create a PR at github.com/kuvamdazeus/noobs-spotify-clone\n
+									Got ideas to improvise ml model ? create a PR at github.com/kuvamdazeus/noobs-spotify-clone-backend
+								`,
+								button: {text: '❤️'}
 							})
 						}}
 					/>

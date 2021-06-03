@@ -64,10 +64,12 @@ h4 {
 .alert {
   position: sticky;
   bottom: 0;
+  width: 100%;
   font-weight: 650;
   font-size: 16px;
   padding: 5px;
   transition: 200ms;
   display: flex;
   justify-content: center;
+  z-index: 1;
 }

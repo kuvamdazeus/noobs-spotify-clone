@@ -11,7 +11,9 @@ export default function(req, res) {
         user-read-playback-position
         playlist-read-private
         user-library-read
+        user-library-modify
         streaming
+        playlist-modify-private
     `;
     
     let url = 'https://accounts.spotify.com/authorize?response_type=token&client_id=' +

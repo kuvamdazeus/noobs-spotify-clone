@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Head from 'next/head';
 import { Avatar } from '@material-ui/core';
 import jwt from 'jsonwebtoken';
 import router from "next/router";
@@ -70,6 +71,13 @@ export default function Album({ appContext }) {
 
     return (
         <section className="dashboard">
+
+            <Head>
+                <title>Spotify - Artist</title>
+                <meta name="description" content="Play top albums from your favourite artist" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
 			<nav style={navStyles}>
 				<p></p>
 
