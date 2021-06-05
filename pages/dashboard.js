@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Avatar } from '@material-ui/core';
 import AlbumContainer from '../components/AlbumContainer';
@@ -17,7 +17,6 @@ export default function Dashboard({ appContext }) {
 	const [colors, setColors] = useState([]);
 	const [dayGreet, setDayGreet] = useState([]);
 	const [alertData, setAlertData] = useState('');
-	const [renderPlayer, setRenderPlayer] = useState(false);
 
 	const [artists, setArtists] = useState([]);
 	const [topAlbums, setTopAlbums] = useState([]);
@@ -72,8 +71,6 @@ export default function Dashboard({ appContext }) {
 			router.push('/');
 
 		}
-
-		setRenderPlayer(true);
 
 	}, []);
 
