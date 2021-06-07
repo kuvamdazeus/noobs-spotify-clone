@@ -76,9 +76,12 @@ export default function Dashboard({ appContext }) {
 
 	const handleSearch = e => {
 		e.preventDefault();
+
+		if (searchText)
+			spotifyApi.search(searchText, ['track', 'album', 'artist'], { limit: 30 })
+			.then(data => setSearchResults(data));
 		
-		spotifyApi.search(searchText, ['track', 'album', 'artist'], { limit: 30 })
-		.then(data => setSearchResults(data));
+		else setSearchResults('');
 	}
 
 	const navStyles = {

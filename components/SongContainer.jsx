@@ -10,7 +10,7 @@ export default function SongContainer({ song, album, spotifyApi }) {
 
     const [mouseOver, setMouseOver] = useState(false);
     const [buttonText, setButtonText] = useState('Save');
-    const [isPlaylist, setIsPlaylist] = useState(album.type === 'playlist');
+    const [isPlaylist, setIsPlaylist] = useState(album?.type === 'playlist');
 
     useEffect(() => {
         let songMinutes = song.duration_ms / (1000 * 60);
