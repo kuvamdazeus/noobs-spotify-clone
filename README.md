@@ -1,6 +1,6 @@
 # A NextJS Project ❤️
 ###### Go to /library after signing in or in 'Your Library' section to get recommendations based upon songs in your playlist
-###### Note: if the library page is not working, its probably because of the "dyno hour quota" exceed of heroku
+###### Note: if the library page is not working, its probably because of the "Free dyno hour quota exceed" of heroku
 ----------
 ## Features & functionality 💯:
    1. Recommend songs to the user based on its tracks saved in spotify playlists (ML server code repo linked below)
