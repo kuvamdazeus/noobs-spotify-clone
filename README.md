@@ -1,5 +1,5 @@
 # A NextJS Project ❤️
-Go to /library after signing in or in 'Your Library' section to get recommendations based upon songs in your playlist
+###### Go to /library after signing in or in 'Your Library' section to get recommendations based upon songs in your playlist
 ----------
 ## Features & functionality 💯:
    1. Recommend songs to the user based on its tracks saved in spotify playlists (ML server code repo linked below)
