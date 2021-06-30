@@ -56,10 +56,11 @@ export default function Album({ appContext }) {
 		alignItems: 'center',
 		position: 'sticky',
 		top: 0,
-		backgroundColor: colors[0],
+		backgroundColor: 'transparent',
 		paddingBlock: 15,
 		paddingInline: 10,
 		zIndex: 1,
+        marginBottom: -70
 	};
 
 	const avatarStyles = {
@@ -87,33 +88,26 @@ export default function Album({ appContext }) {
 				</div>
 			</nav>
 
-            <header
+            {/* <section style={{ backgroundColor: '#131313' }}> */}
+            <section 
                 style={{
-                    backgroundImage: `linear-gradient(${colors[0]}, ${colors[1]})`,
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center'
+                    backgroundImage: artist.images && `url("${artist.images[0]?.url}")`,
+                    backgroundRepeat: 'no-repeat', backgroundPosition: 'top',
                 }}
-                // className='dashboard_header'
             >
-                <img
-                    src={artist.images ? artist.images[0]?.url : null}
-                    alt='' 
-                    style={{
-                        objectFit: 'contain',
-                        width: '18vw',
-                        margin: 20,
-                        borderRadius: 10
-                    }}
-                />
-				<p style={{fontSize: '3.5vw'}}><b>{artist.name}</b></p>
+                <section style={{backdropFilter: 'blur(10px)', paddingTop: '10%'}}>
+                    <p style={{fontSize: '3.5rem', marginBlock: 100, marginLeft: 30}}><b>{artist.name}</b></p>
 
-			</header><br /><br />
-
-            <p className='small_heading'>Top albums</p>
-			<div style={{ display: 'flex', overflowX: 'scroll', overflowY: 'hidden'}}>
-				{albums.map(artistAlbum => <AlbumContainer album={artistAlbum} key={artistAlbum.id} />)}
-			</div><br /><br />
+                    <section style={{backgroundImage: 'linear-gradient(to bottom, transparent, #131313)'}}>
+                        <p className='small_heading'>Top albums</p>
+                        <div style={{ display: 'flex', overflowX: 'scroll', overflowY: 'hidden'}}>
+                            {albums.map(artistAlbum => <AlbumContainer album={artistAlbum} key={artistAlbum.id} />)}
+                        </div>
+                    </section>
+                </section>
+            </section>
+            
+            <br /><br />
 
         </section>
     );
