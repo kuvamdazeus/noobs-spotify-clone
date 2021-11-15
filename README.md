@@ -31,4 +31,4 @@ Reason:
   as the app was about to be completed and wasnt structured according to small resolutions, so the most i could do was to show user an alert
   to use their phones in landscape mode 😅
 
-### 3. Doesn't works if user has too many songs in his/her playlists
+### 3. Doesn't works if user has too many songs in his/her playlists (too slow)
