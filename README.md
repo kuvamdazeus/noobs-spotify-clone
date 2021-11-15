@@ -1,6 +1,6 @@
 # A NextJS Project ❤️
 
-Frontend website hosted at https://noobs-spotify-clone-xi.vercel.app & backend code available at https://github.com/kuvamdazeus/noobs-spotify-clone-backend
+Frontend website hosted at https://noobs-spotify-clone-xi.vercel.app & backend code of **ML Server** available at https://github.com/kuvamdazeus/noobs-spotify-clone-backend
 
 Go to /library after signing in or in 'Your Library' section to get recommendations based upon songs in your playlist
 
